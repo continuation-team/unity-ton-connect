@@ -1,0 +1,15 @@
+{
+    "name": {{{ JSON.stringify(PRODUCT_NAME) }}},
+    "short_name": {{{ JSON.stringify(PRODUCT_NAME) }}},
+    "start_url": "index.html",
+    "display": "fullscreen",
+    "background_color": "{{{ BACKGROUND_COLOR }}}",
+    "theme_color": "{{{  SPLASH_SCREEN_STYLE.toLowerCase() === 'light' ? '#fff' : '#000' }}}",
+    "description": {{{ JSON.stringify(PRODUCT_DESCRIPTION) }}},
+    "icons": [{
+      "src": "TemplateData/icons/unity-logo-{{{ SPLASH_SCREEN_STYLE.toLowerCase() }}}.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }]
+  }

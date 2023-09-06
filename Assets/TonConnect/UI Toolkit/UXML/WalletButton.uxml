@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UXML/style.uss?fileID=7433441132597879392&amp;guid=015e32d7f6f0d674ca7d8f2a0be783c7&amp;type=3#style" />
+    <ui:VisualElement name="WalletButton" class="wallet-item-button">
+        <ui:VisualElement name="WalletButton_WalletImage" style="flex-grow: 1; position: absolute; width: 65px; height: 65px; flex-direction: row; align-items: center; justify-content: center; top: 10px; background-image: none; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+        <ui:Label tabindex="-1" text="Tonkeeper" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WalletButton_WalletName" style="position: absolute; bottom: 10px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255); -unity-font-style: bold;" />
+    </ui:VisualElement>
+</ui:UXML>
