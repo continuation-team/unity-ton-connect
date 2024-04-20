@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using TonSdk.Connect;
 using TonSdk.Core;
 using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
+using Message = TonSdk.Connect.Message;
 
 public class UIManager : MonoBehaviour
 {
@@ -255,6 +257,7 @@ public class UIManager : MonoBehaviour
             document.rootVisualElement.Q<VisualElement>("ConnectModal").style.display = DisplayStyle.None;
             return;
         }
+        tonConnectHandler.CreateTonConnectInstance();
 
         document.rootVisualElement.Q<Label>("ConnectModal_Title").text = "Choose Wallet";
 
@@ -268,8 +271,7 @@ public class UIManager : MonoBehaviour
         document.rootVisualElement.Q<VisualElement>("Button_Back").RegisterCallback<ClickEvent>(BackToMainContent);
         document.rootVisualElement.Q<VisualElement>("Button_Close").UnregisterCallback<ClickEvent>(CloseConnectModal);
         document.rootVisualElement.Q<VisualElement>("Button_Close").RegisterCallback<ClickEvent>(CloseConnectModal);
-
-        Debug.Log("hello");
+        
         StartCoroutine(tonConnectHandler.LoadWallets("https://raw.githubusercontent.com/ton-blockchain/wallets-list/main/wallets.json", LoadWalletsCallback));
     }
 

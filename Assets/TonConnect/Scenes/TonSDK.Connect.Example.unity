@@ -335,7 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseWebWallets: 1
   RestoreConnectionOnAwake: 0
-  ManifestURL: https://dedust.io/tonconnect-manifest.json
+  ManifestURL: https://example.com/tonconnect.json
   WalletsListSource: 
   WalletsListCacheTTL: 0
 --- !u!1660057539 &9223372036854775807

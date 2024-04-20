@@ -50,7 +50,7 @@ public class TonConnectHandler : MonoBehaviour
         CreateTonConnectInstance();
     }
 
-    private async void CreateTonConnectInstance()
+    public async void CreateTonConnectInstance()
     {
         // Here we create tonconnect instance
 
@@ -73,7 +73,7 @@ public class TonConnectHandler : MonoBehaviour
             listenEventsFunction = new ListenEventsFunction(ListenEvents),
             sendGatewayMessage = new SendGatewayMessage(SendRequest)
         };
-
+        
         // Tonconnect instance
         tonConnect = new TonConnect(options, remoteStorage, additionalConnectOptions);
 
@@ -180,7 +180,7 @@ public class TonConnectHandler : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(line))
                 {
-                    //Debug.Log(line);
+                    // Debug.Log(line);
                     handler(line);
                 }
             }
