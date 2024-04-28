@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TonSdk.Connect;
 using TonSdk.Core;
-using Unity.VisualScripting;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
@@ -16,7 +14,7 @@ public class UIManager : MonoBehaviour
     public bool UseSavedWalletIcons = true;
     [Tooltip("Wallet icons. Works only if UseSavedWalletIcons is enabled.")]
     public List<Sprite> WalletIcons = new ();
-    private List<string> WalletsIconsList = new () {"tonkeeper", "tonhub", "openmask", "dewallet", "mytonwallet", "tonflow", "tonwallet", "xtonwallet"};
+    private List<string> WalletsIconsList = new () {"tonkeeper", "tonhub", "openmask", "dewallet", "mytonwallet", "tonflow", "tonwallet", "xtonwallet", "telegram-wallet"};
 
     [Header("UI References")]
     [SerializeField] private UIDocument document;
@@ -121,6 +119,7 @@ public class UIManager : MonoBehaviour
     {
         EnableConnectWalletButton();
         DisableWalletInfoButton();
+        tonConnectHandler.RestoreConnectionOnAwake = false;
         await tonConnectHandler.tonConnect.Disconnect();
     }
 
@@ -178,18 +177,18 @@ public class UIManager : MonoBehaviour
         jsContentElement.style.display = DisplayStyle.None;
 
         // load http bridge wallets
-        for (int i = 0; i < wallets.Count; i++)
+        foreach (var t in wallets)
         {
-            if(wallets[i].BridgeUrl == null) continue;
+            if(t.BridgeUrl == null) continue;
             VisualElement walletElement = walletItem.CloneTree();
 
-            if(UseSavedWalletIcons && WalletsIconsList.Contains(wallets[i].AppName))
+            if(UseSavedWalletIcons && WalletsIconsList.Contains(t.AppName))
             {
-                walletElement.Q<VisualElement>("WalletButton_WalletImage").style.backgroundImage = new StyleBackground(WalletIcons[WalletsIconsList.IndexOf(wallets[i].AppName)]);
+                walletElement.Q<VisualElement>("WalletButton_WalletImage").style.backgroundImage = new StyleBackground(WalletIcons[WalletsIconsList.IndexOf(t.AppName)]);
             }
             else
             {
-                using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(wallets[i].Image))
+                using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(t.Image))
                 {
                     yield return request.SendWebRequest();
 
@@ -203,8 +202,8 @@ public class UIManager : MonoBehaviour
                 }
             }
 
-            walletElement.Q<Label>("WalletButton_WalletName").text = wallets[i].Name;
-            walletElement.RegisterCallback<ClickEvent, WalletConfig>(OpenWalletQRContent, wallets[i]);
+            walletElement.Q<Label>("WalletButton_WalletName").text = t.Name;
+            walletElement.RegisterCallback<ClickEvent, WalletConfig>(OpenWalletQRContent, t);
             contentElement.Add(walletElement);
         }
 
@@ -272,7 +271,7 @@ public class UIManager : MonoBehaviour
         document.rootVisualElement.Q<VisualElement>("Button_Close").UnregisterCallback<ClickEvent>(CloseConnectModal);
         document.rootVisualElement.Q<VisualElement>("Button_Close").RegisterCallback<ClickEvent>(CloseConnectModal);
         
-        StartCoroutine(tonConnectHandler.LoadWallets("https://raw.githubusercontent.com/ton-blockchain/wallets-list/main/wallets.json", LoadWalletsCallback));
+        StartCoroutine(tonConnectHandler.LoadWallets("https://raw.githubusercontent.com/ton-blockchain/wallets-list/main/wallets-v2.json", LoadWalletsCallback));
     }
 
 

@@ -286,6 +286,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 306a686093178e449925fded6c971433, type: 3}
   - {fileID: 21300000, guid: a82d6bfd20ab4274cac267c7232816fc, type: 3}
   - {fileID: 21300000, guid: 33b0b1a83ceea584a85a4687be3a9e83, type: 3}
+  - {fileID: 21300000, guid: 6cea1cf91e063e74eb3dc8404f704529, type: 3}
   document: {fileID: 764677334}
   walletItem: {fileID: 9197481963319205126, guid: 02754049dfaf3f547892804f4967d87c, type: 3}
   tonConnectHandler: {fileID: 1391746625}
