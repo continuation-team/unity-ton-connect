@@ -46,6 +46,8 @@
 .VolumeIcon.icns
 NuGet.config
 NuGet.config.meta
+packages.config
+packages.config.meta
 
 # Auto-generated folder config file
 Desktop.ini
