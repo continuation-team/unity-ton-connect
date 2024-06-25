@@ -44,6 +44,8 @@
 .TemporaryItems/
 .Trashes/
 .VolumeIcon.icns
+NuGet.config
+NuGet.config.meta
 
 # Auto-generated folder config file
 Desktop.ini
