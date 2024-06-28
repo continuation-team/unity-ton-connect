@@ -58,3 +58,6 @@ $RECYCLE.BIN/
 # VS Code directories
 .vscode/
 .history/
+/Resources
+Resources.meta
+*.meta

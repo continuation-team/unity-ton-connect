@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseWebWallets: 1
-  RestoreConnectionOnAwake: 0
-  ManifestURL: https://mrveit.github.io/TGMiniApps-Saunposium/dAppConnect.json
+  RestoreConnectionOnAwake: 1
+  ManifestURL: https://mrveit.github.io/TGMiniApps-Saunposium/dAppData.json
   WalletsListSource: 
   WalletsListCacheTTL: 0

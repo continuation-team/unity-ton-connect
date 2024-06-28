@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEditor;
-using TonConnect.Editor.SetupWindow;
+using UnitonConnect.Editor.SetupWindow;
 
-namespace TonConnect.Editor.Common
+namespace UnitonConnect.Editor.Common
 {
     public sealed class TopBarMenu : ScriptableObject
     {
-        [MenuItem("Ton Connect/dApps Setup")]
+        [MenuItem("Uniton Connect/dApp Config")]
         public static void OpenSettingsWindow()
         {
             DAppSetupWindow.ShowWindow();

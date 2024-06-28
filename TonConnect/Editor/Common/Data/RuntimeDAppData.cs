@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace TonConnect.Runtime.Data
+namespace UnitonConnect.Runtime.Data
 {
     [Serializable]
     public sealed class RuntimeDAppData

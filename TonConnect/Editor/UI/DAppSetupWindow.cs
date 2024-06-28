@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEditor;
-using TonConnect.Runtime.Data;
-using TonConnect.Editor.Common;
-using TonConnect.Editor.SetupWindow.Data;
-using TonConnect.Editor.Utils;
+using UnitonConnect.Runtime.Data;
+using UnitonConnect.Editor.Common;
+using UnitonConnect.Editor.SetupWindow.Data;
+using UnitonConnect.Editor.Utils;
+using UnitonConnect.Core.Utils.Debugging;
 
-namespace TonConnect.Editor.SetupWindow
+namespace UnitonConnect.Editor.SetupWindow
 {
     public sealed class DAppSetupWindow : EditorWindow
     {
@@ -34,7 +35,7 @@ namespace TonConnect.Editor.SetupWindow
         public static void ShowWindow()
         {
             var config = (DAppSetupWindow)GetWindow(typeof(DAppSetupWindow));
-            config.titleContent = new GUIContent("dApp Setup");
+            config.titleContent = new GUIContent("dApp Config");
             config.minSize = new Vector2(500, 250);
             config.maxSize = new Vector2(500, 250);
 
@@ -70,7 +71,7 @@ namespace TonConnect.Editor.SetupWindow
 
                 var filePath = AssetDatabase.GetAssetPath(_selectedIcon);
 
-                WindowUtils.EditCompressionProperties(filePath);
+                StorageUtils.EditCompressionProperties(filePath);
             }
 
             EditorGUILayout.EndVertical();
@@ -151,8 +152,8 @@ namespace TonConnect.Editor.SetupWindow
         private void UpdateRuntimeStorage()
         {
             var runtimeStorage = Resources.Load<DAppConfig>(
-                $"{ProjectConsts.RUNTIME_FOLDER_IN_RESOURCES}/" +
-                $"{ProjectConsts.RUNTIME_FILE_NAME_WITOUT_FORMAT}");
+                $"{ProjectStorageConsts.RUNTIME_FOLDER_IN_RESOURCES}/" +
+                $"{ProjectStorageConsts.RUNTIME_FILE_NAME_WITOUT_FORMAT}");
 
             runtimeStorage.Data.ProjectLink = DAppSetupData.Instance.ProjectLink;
             runtimeStorage.Data.Name = DAppSetupData.Instance.Name;
@@ -160,7 +161,7 @@ namespace TonConnect.Editor.SetupWindow
 
             DAppConfig.SaveAsync();
 
-            Debug.Log("[Ton Connect] The dApp data storage has been successfully updated!");
+            UnitonConnectLogger.Log("The dApp data storage has been successfully updated!");
         }
     }
 }
