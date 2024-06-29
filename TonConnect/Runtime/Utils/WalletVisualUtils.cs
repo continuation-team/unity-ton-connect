@@ -98,8 +98,6 @@ namespace UnitonConnect.Core.Utils.View
 
         public static Sprite GetSpriteFromTexture(Texture2D texture)
         {
-            Debug.Log("created sprite");
-
             return Sprite.Create(texture,
                 new Rect(0, 0, texture.width, texture.height),
                 new Vector2(0.5f, 0.5f)

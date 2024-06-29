@@ -121,21 +121,32 @@ namespace UnitonConnect.Core.Demo
 
         private async void WalletsConfigsClaimed(List<WalletConfig> wallets)
         {
-            if (_unitonSDK.IsUseWebWallets)
-            {
-                wallets = GetJavaScriptBridgeWallets(wallets);
+            List<WalletConfig> httpBridgeWallets = GetHttpBridgeWallets(wallets);
+            List<WalletConfig> jsBridgeWallets = GetJavaScriptBridgeWallets(wallets);
 
-                UnitonConnectLogger.Log($"Parsed only Js bridge wallets: {JsonConvert.SerializeObject(wallets)}");
+            List<WalletConfig> uniqueWallets = null;
+            List<WalletConfig> walletsConfigs = null;
+
+            if (UnitonConnectSDK.Instance.IsUseWebWallets)
+            {
+                foreach (var wallet in httpBridgeWallets)
+                {
+                    jsBridgeWallets.Add(wallet);
+                }
+
+                UnitonConnectLogger.Log($"Created wallet list: {JsonConvert.SerializeObject(jsBridgeWallets)}");
+            }
+
+            if (UnitonConnectSDK.Instance.IsUseWebWallets)
+            {
+                uniqueWallets = jsBridgeWallets.GroupBy(w => w.Name).Select(g => g.First()).ToList();
             }
             else
             {
-                wallets = GetHttpBridgeWallets(wallets);
-
-                UnitonConnectLogger.Log($"Parsed only http bridge wallets: {JsonConvert.SerializeObject(wallets)}");
+                uniqueWallets = httpBridgeWallets.GroupBy(w => w.Name).Select(g => g.First()).ToList();
             }
-
-            var uniqueWallets = wallets.GroupBy(w => w.Name).Select(g => g.First()).ToList();
-            var walletsConfigs = uniqueWallets.Take(uniqueWallets.Capacity).ToList();
+                
+            walletsConfigs = uniqueWallets.Take(uniqueWallets.Capacity).ToList();
 
             UnitonConnectLogger.Log($"Created {walletsConfigs.Capacity} wallets");
 

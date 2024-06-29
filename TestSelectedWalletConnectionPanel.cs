@@ -71,7 +71,8 @@ namespace UnitonConnect.Core.Demo
             {
                 TestUI.OpenDeepLinkFromHttpBridgeWallet(_connectionUrl);
             }
-            else if (UnitonConnectSDK.Instance.IsUseWebWallets)
+            else if (TestUIManager.Instance.HasJSBridge(_currentConfig) &&
+                UnitonConnectSDK.Instance.IsUseWebWallets)
             {
                 await TestUI.ConnectWebWalletWithDeepLinkAsync(_currentConfig);
             }
