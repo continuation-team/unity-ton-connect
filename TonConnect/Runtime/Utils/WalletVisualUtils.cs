@@ -63,7 +63,7 @@ namespace UnitonConnect.Core.Utils.View
         /// Get wallet icon from local storage, if it exists
         /// </summary>
         /// <param name="targetWalletName">Wallet name identifier for receiving the icon</param>
-        public static Texture2D GetWalletIconFromStorage(
+        public static async Task<Texture2D> GetWalletIconFromLocalStorage(
             WalletConfig config, List<WalletProviderConfig> localStorage)
         {
             if (!UnitonConnectSDK.Instance.IsUseCachedWalletsIcons)
@@ -84,11 +84,22 @@ namespace UnitonConnect.Core.Utils.View
                 }
             }
 
+            if (icon == null)
+            {
+                UnitonConnectLogger.LogError($"Failed to load {config.Name} wallet icon to local storage, start downloading from server...");
+
+                icon = await GetWalletIconFromServerAsync(config.Image);
+
+                UnitonConnectLogger.Log($"{config.Name} wallet icon successfully downloaded from the server");
+            }
+
             return icon;
         }
 
         public static Sprite GetSpriteFromTexture(Texture2D texture)
         {
+            Debug.Log("created sprite");
+
             return Sprite.Create(texture,
                 new Rect(0, 0, texture.width, texture.height),
                 new Vector2(0.5f, 0.5f)

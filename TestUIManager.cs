@@ -13,6 +13,7 @@ using UnitonConnect.Core.Data.Common;
 using UnitonConnect.Core.Utils.View;
 using UnitonConnect.Core.Utils.Debugging;
 using UnitonConnect.Editor.Common;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace UnitonConnect.Core.Demo
 {
@@ -120,10 +121,23 @@ namespace UnitonConnect.Core.Demo
 
         private async void WalletsConfigsClaimed(List<WalletConfig> wallets)
         {
-            var uniqueWallets = wallets.GroupBy(w => w.Name).Select(g => g.First()).ToList();
-            var walletsConfigs = uniqueWallets.Take(_walletsStorage.Config.Capacity).ToList();
+            if (_unitonSDK.IsUseWebWallets)
+            {
+                wallets = GetJavaScriptBridgeWallets(wallets);
 
-            UnitonConnectLogger.Log($"Created {_walletsStorage.Config.Capacity} wallets");
+                UnitonConnectLogger.Log($"Parsed only Js bridge wallets: {JsonConvert.SerializeObject(wallets)}");
+            }
+            else
+            {
+                wallets = GetHttpBridgeWallets(wallets);
+
+                UnitonConnectLogger.Log($"Parsed only http bridge wallets: {JsonConvert.SerializeObject(wallets)}");
+            }
+
+            var uniqueWallets = wallets.GroupBy(w => w.Name).Select(g => g.First()).ToList();
+            var walletsConfigs = uniqueWallets.Take(uniqueWallets.Capacity).ToList();
+
+            UnitonConnectLogger.Log($"Created {walletsConfigs.Capacity} wallets");
 
             LoadedWallets = walletsConfigs;
 
@@ -156,13 +170,26 @@ namespace UnitonConnect.Core.Demo
         /// </summary>
         /// <param name="config">Wallet configuration for connection</param>
         /// <param name="qrCodeImageClaimed">Callback for QR code retrieval</param>
-        public async Task ConnectWalletWithQRCodeAsync(WalletConfig config,
-            Action<Texture2D, string> qrCodeImageClaimed)
+        public async Task GenerateQRCodeConnectionFromWalletConfigAsync(WalletConfig config)
         {
             var connectUrl = await GetConnectUrlAsync(config);
             var qrCode = WalletVisualUtils.GetQRCodeFromUrl(connectUrl);
 
-            qrCodeImageClaimed?.Invoke(qrCode, connectUrl);
+            return;
+        }
+
+        public Texture2D GenerateQRCodeFromConnectURL(string connectUrl)
+        {
+            var qrCode = WalletVisualUtils.GetQRCodeFromUrl(connectUrl);
+
+            return qrCode;
+        }
+
+        public async Task<string> GenerateURLForQRCodeConnection(WalletConfig wallet)
+        {
+            var connectUrl = await GetConnectUrlAsync(wallet);
+
+            return connectUrl;
         }
 
         /// <summary>
@@ -232,8 +259,8 @@ namespace UnitonConnect.Core.Demo
 
             if (_unitonSDK.IsUseCachedWalletsIcons)
             {
-                icon = WalletVisualUtils.GetWalletIconFromStorage(config,
-                    _walletsStorage.Config);
+                icon = await WalletVisualUtils.GetWalletIconFromLocalStorage(
+                    config, _walletsStorage.Config);
             }
             else
             {
