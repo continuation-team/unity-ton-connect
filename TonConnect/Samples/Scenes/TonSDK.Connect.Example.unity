@@ -265,20 +265,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 764677333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2f6c3af86e96df48be98f0772e2df84, type: 3}
+  m_Script: {fileID: 11500000, guid: fd86c4c132eb76047970ffc682a61879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseSavedWalletIcons: 1
+  UseSavedWalletIcons: 0
   WalletIcons:
-  - {fileID: 21300000, guid: 7486662b87d25f74ca59c889405af3f7, type: 3}
-  - {fileID: 21300000, guid: 5f1fa174b7cfef445a2d0ff5ceaf0b89, type: 3}
-  - {fileID: 21300000, guid: abd450136a584924cb2fd7a60a347007, type: 3}
+  - {fileID: 21300000, guid: 731c5d89c457dfc4eb6324746581ce67, type: 3}
   - {fileID: 21300000, guid: a10e6496c9fe6de47939a6460c07c14d, type: 3}
   - {fileID: 21300000, guid: d399eaa8fb5f2134c9d063bbd6265b91, type: 3}
-  - {fileID: 21300000, guid: 306a686093178e449925fded6c971433, type: 3}
+  - {fileID: 21300000, guid: abd450136a584924cb2fd7a60a347007, type: 3}
+  - {fileID: 21300000, guid: 23d89b482f59b8c4ea8b5c22d3b0935a, type: 3}
+  - {fileID: 21300000, guid: 6cea1cf91e063e74eb3dc8404f704529, type: 3}
+  - {fileID: 21300000, guid: 5f1fa174b7cfef445a2d0ff5ceaf0b89, type: 3}
+  - {fileID: 21300000, guid: 7486662b87d25f74ca59c889405af3f7, type: 3}
   - {fileID: 21300000, guid: a82d6bfd20ab4274cac267c7232816fc, type: 3}
   - {fileID: 21300000, guid: 33b0b1a83ceea584a85a4687be3a9e83, type: 3}
-  - {fileID: 21300000, guid: 6cea1cf91e063e74eb3dc8404f704529, type: 3}
   document: {fileID: 764677334}
   walletItem: {fileID: 9197481963319205126, guid: 02754049dfaf3f547892804f4967d87c, type: 3}
   tonConnectHandler: {fileID: 1391746625}
@@ -323,11 +324,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1391746623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b71f0e50db37e344be6ce980831b8d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3775f763393d4a34d9a28f646e58ae87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseWebWallets: 1
   RestoreConnectionOnAwake: 1
-  ManifestURL: https://mrveit.github.io/TGMiniApps-Saunposium/dAppData.json
+  ManifestURL: https://mrveit.github.io/Uniton-Connect/dAppData.json
   WalletsListSource: 
   WalletsListCacheTTL: 0

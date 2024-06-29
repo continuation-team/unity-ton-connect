@@ -9,17 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0939f810fffbbc147b8ec4fe13eb8cf4, type: 3}
+  m_Script: {fileID: 11500000, guid: 27c738896ec511a4195019a19ad8a06e, type: 3}
   m_Name: Wallets Storage
   m_EditorClassIdentifier: 
-  <Config>k__BackingField:
-  - {fileID: 11400000, guid: 730a35a51f9976d498417b2702d47e51, type: 2}
-  - {fileID: 11400000, guid: 45650f3224672d2458dd98ab015daaf2, type: 2}
-  - {fileID: 11400000, guid: 0504cde0416059346a5611e49a8c446c, type: 2}
-  - {fileID: 11400000, guid: a7be6d78f8079df4996ee56badb23e68, type: 2}
-  - {fileID: 11400000, guid: b83b39a3b823d044c99e61880d5f7faf, type: 2}
-  - {fileID: 11400000, guid: 41379e01168876c47b284bbb2d273d25, type: 2}
-  - {fileID: 11400000, guid: 15eb06be515c6d349b7d629be6e46492, type: 2}
-  - {fileID: 11400000, guid: 1fb798b825b208048ac77b4be3b63264, type: 2}
-  - {fileID: 11400000, guid: c6b41c95451e00f408cd019ec7f11cb0, type: 2}
-  - {fileID: 11400000, guid: 2ad66079df6a72241a8aa307ef966584, type: 2}
+  <Config>k__BackingField: []

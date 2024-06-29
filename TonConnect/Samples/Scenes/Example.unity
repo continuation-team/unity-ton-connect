@@ -367,7 +367,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 136500635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f55d756a2e6f9439161e5921cb0300, type: 3}
+  m_Script: {fileID: 11500000, guid: aaef2dddc0c6b1e4a83c4e976fe5baa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _testMode: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
     CachedTimeToLive: 0
   _useWebWallets: 1
   _useCachedWalletsIcons: 1
-  _supportedWallets: {fileID: 11400000, guid: 8a463a3905efcf3419ccdeba7344d8f6, type: 2}
+  _supportedWallets: {fileID: 0}
 --- !u!1 &177101742
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,19 +824,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 515026106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1fdae89ca41cb04584ab62a8e63123f, type: 3}
+  m_Script: {fileID: 11500000, guid: 957ec39cba07dc546a2894931de3946b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _unitonSDK: {fileID: 136500638}
-  _walletsStorage: {fileID: 11400000, guid: 8a463a3905efcf3419ccdeba7344d8f6, type: 2}
-  _debugMessage: {fileID: 1482803316}
-  _shortWalletAddress: {fileID: 2058162193}
-  _connectButton: {fileID: 1029599515}
-  _disconnectButton: {fileID: 817907982}
-  _chooseWalletPanel: {fileID: 550155504}
-  _connectPanel: {fileID: 1173098803}
-  _walletViewPrefab: {fileID: 5946920822223718644, guid: 3905dcc0e8a0bc848bc3eadc651ad6a9, type: 3}
-  _walletsParent: {fileID: 1122900484}
+  _walletsStorage: {fileID: 0}
+  _debugMessage: {fileID: 0}
+  _shortWalletAddress: {fileID: 0}
+  _connectButton: {fileID: 0}
+  _disconnectButton: {fileID: 0}
+  _chooseWalletPanel: {fileID: 0}
+  _connectPanel: {fileID: 0}
+  _walletViewPrefab: {fileID: 0}
+  _walletsParent: {fileID: 0}
   _activeWallets: []
 --- !u!1 &529727144
 GameObject:
