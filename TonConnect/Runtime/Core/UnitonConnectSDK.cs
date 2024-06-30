@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using TonSdk.Core;
 using TonSdk.Connect;
 using Newtonsoft.Json;
 using UnitonConnect.Core.Data;
@@ -85,6 +86,11 @@ namespace UnitonConnect.Core
         /// </summary>
         public event IUnitonConnectSDKCallbacks.OnWalletConnectionFail OnWalletConnectionFailed;
 
+        /// <summary>
+        /// Callback for processing the status of restored connection to the wallet
+        /// </summary>
+        public event IUnitonConnectSDKCallbacks.OnWalletConnectionRestore OnWalletConnectionRestored;
+
         private void Awake()
         {
             CreateInstance();
@@ -95,11 +101,12 @@ namespace UnitonConnect.Core
             }
 
             Initialize();
-        }
+        } 
+
         /// <summary>
         /// Initialization of the Uniton Connect sdk if you want to do it manually.
         /// </summary>
-        public async void Initialize()
+        public void Initialize()
         {
             var dAppManifestLink = string.Empty;
             var dAppConfig = ProjectStorageConsts.GetRuntimeAppStorage();
@@ -122,11 +129,28 @@ namespace UnitonConnect.Core
             var connectOptions = GetAdditionalConnectOptions();
 
             _tonConnect = GetTonConnectInstance(options, remoteStorage, connectOptions);
+
             _tonConnect.OnStatusChange(OnWalletConnectionFinish, OnWalletConnectionFail);
 
-            await RestoreConnectionAsync(remoteStorage);
+            RestoreConnectionAsync(remoteStorage);
 
-            UnitonConnectLogger.Log("Success init");
+            UnitonConnectLogger.Log("SDK successfully initialized");
+        }
+
+        /// <summary>
+        /// Set the connection event listener to pause
+        /// </summary>
+        public void PauseConnection()
+        {
+            _tonConnect.PauseConnection();
+        }
+
+        /// <summary>
+        /// Switching off the activated pause for the connection event listener
+        /// </summary>
+        public void UnPauseConnection()
+        {
+            _tonConnect.UnPauseConnection();
         }
 
         /// <summary>
@@ -141,9 +165,108 @@ namespace UnitonConnect.Core
         }
 
         /// <summary>
+        /// Connecting to an HTTP bridged wallet via deep links
+        /// </summary>
+        /// <param name="wallet">Wallet configuration for connection</param>
+        /// <param name="connectUrl">Link to connect to the wallet</param>
+        public void ConnectHttpBridgeWalletViaDeepLink(
+            WalletConfig wallet, string connectUrl)
+        {
+            if (!WalletConnectUtils.HasHttpBridge(wallet))
+            {
+                UnitonConnectLogger.LogWarning("The specified wallet configuration has no HTTP bridge detected," +
+                    " the deeplink connection was terminated.");
+
+                return;
+            }
+
+            Application.OpenURL(Uri.EscapeUriString(connectUrl));
+        }
+
+        /// <summary>
+        /// Connection to a JavaScript bridged wallet via deep links
+        /// </summary>
+        /// <param name="wallet">Wallet configuration for connection</param>
+        public async void ConnectJavaScriptBridgeWalletViaDeeplink(WalletConfig wallet)
+        {
+            if (!WalletConnectUtils.HasJSBridge(wallet))
+            {
+                UnitonConnectLogger.LogWarning("The specified wallet configuration has no JavaScript bridge detected," +
+                    " the deeplink connection was terminated.");
+
+                return;
+            }
+
+            await GenerateConnectURL(wallet);
+        }
+
+        /// <summary>
+        /// Send TonCoin to the specified recipient address
+        /// </summary>
+        /// <param name="recipientAddress">Token recipient address</param>
+        /// <param name="amount">Number of tokens to send</param>
+        public async Task SendTransaction(string recipientAddress, double amount)
+        {
+            var transactionMessages = GetTransactionMessages(recipientAddress, amount);
+            var transactionRequest = GetTransactionRequest(transactionMessages);
+
+            try
+            {
+                UnitonConnectLogger.Log($"Created a request to send a TON" +
+                    $" to the recipient: {recipientAddress} in amount {amount}");
+
+                var transactionResult = await _tonConnect.SendTransaction(transactionRequest);
+
+                UnitonConnectLogger.Log($"Transaction successfully completed: {transactionResult.Value.Boc}");
+            }
+            catch (WalletNotConnectedError connectionError)
+            {
+                UnitonConnectLogger.LogError($"Failed to send tokens due" +
+                    $" to the following reason: {connectionError.Message}");
+            }
+            catch (Exception exception)
+            {
+                UnitonConnectLogger.LogError($"Failed to send tokens due" +
+                    $" to the following reason: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Disconnect of previously connected wallet
+        /// </summary>
+        public async Task DisconnectWallet()
+        {
+            try
+            {
+                if (!IsWalletConnected)
+                {
+                    UnitonConnectLogger.LogError("No connected wallets are detected for disconnection");
+
+                    return;
+                }
+
+                PauseConnection();
+
+                _restoreConnectionOnAwake = false;
+
+                await _tonConnect.Disconnect();
+            }
+            catch (TonConnectError error)
+            {
+                UnitonConnectLogger.LogError($"Error: {error.Message}");
+            }
+            catch (Exception exception)
+            {
+                UnitonConnectLogger.LogError($"The previously connected wallet could not be " +
+                    $"disconnected due to the following reason: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// Get a link to connect to the wallet via the specified config
         /// </summary>
-        public async Task<string> ConnectWallet(WalletConfig wallet)
+        /// <param name="wallet">Wallet configuration to connect</param>.
+        public async Task<string> GenerateConnectURL(WalletConfig wallet)
         {
             var connectUrl = string.Empty;
 
@@ -162,38 +285,6 @@ namespace UnitonConnect.Core
             }
 
             return connectUrl;
-        }
-
-        /// <summary>
-        /// Unlinking of previously connected wallet
-        /// </summary>
-        public async Task DisconnectWallet()
-        {
-            try
-            {
-                PauseConnection();
-
-                await _tonConnect.Disconnect();
-            }
-            catch (TonConnectError error)
-            {
-                UnitonConnectLogger.LogError($"Error: {error.Message}");
-            }
-            catch (Exception exception)
-            {
-                UnitonConnectLogger.LogError($"The previously connected wallet could not be " +
-                    $"disconnected due to the following reason: {exception.Message}");
-            }
-        }
-
-        public void PauseConnection()
-        {
-            _tonConnect.PauseConnection();
-        }
-
-        public void UnPauseConnection()
-        {
-            _tonConnect.UnPauseConnection();
         }
 
         private void CreateInstance()
@@ -215,17 +306,21 @@ namespace UnitonConnect.Core
             }
         }
 
-        private async Task RestoreConnectionAsync(RemoteStorage storage)
+        private async void RestoreConnectionAsync(RemoteStorage storage)
         {
             if (!_restoreConnectionOnAwake)
             {
                 storage.RemoveItem(RemoteStorage.KEY_CONNECTION);
                 storage.RemoveItem(RemoteStorage.KEY_LAST_EVENT_ID);
 
+                OnWalletConnectionRestore(false);
+
                 return;
             }
 
             bool isSuccess = await _tonConnect.RestoreConnection();
+
+            OnWalletConnectionRestore(isSuccess);
 
             UnitonConnectLogger.Log($"Connection restored with status: {isSuccess}");
         }
@@ -256,7 +351,8 @@ namespace UnitonConnect.Core
             request.Dispose();
         }
 
-        private IEnumerator ActivateInitializationSDKListenerRoutine(EventListenerArgumentsData listenerData)
+        private IEnumerator ActivateInitializationSDKListenerRoutine(
+            EventListenerArgumentsData listenerData)
         {
             var url = listenerData.Url;
 
@@ -294,6 +390,8 @@ namespace UnitonConnect.Core
                 {
                     if (!string.IsNullOrEmpty(line))
                     {
+                        Debug.Log(line);
+
                         listenerData.Provider(line);
                     }
                 }
@@ -324,7 +422,7 @@ namespace UnitonConnect.Core
 
             if (request.result != WebRequestUtils.SUCCESS)
             {
-                UnitonConnectLogger.LogError($"Failed to send Gateway message with error: {request.error}");
+                UnitonConnectLogger.LogError($"Failed to send Gateway message with error: {request.error}, response code: {request.responseCode}");
             }
             else
             {
@@ -381,6 +479,7 @@ namespace UnitonConnect.Core
         private void ParseWalletsConfigs(ref List<WalletProviderData> walletsList, 
             Action<List<WalletConfig>> walletsClaimed)
         {
+            var walletNameWithBugBridgeURL = "MyTonWallet";
             var loadedWallets = new List<WalletConfig>();
 
             foreach (var wallet in walletsList)
@@ -400,6 +499,11 @@ namespace UnitonConnect.Core
                         walletConfig.BridgeUrl = bridge.Url;
                         walletConfig.UniversalUrl = wallet.UniversalUrl;
                         walletConfig.JsBridgeKey = null;
+
+                        if (walletConfig.Name == walletNameWithBugBridgeURL)
+                        {
+                            walletConfig.BridgeUrl = bridge.Url.TrimEnd('/');
+                        }
 
                         loadedWallets.Add(walletConfig);
                     }
@@ -451,10 +555,36 @@ namespace UnitonConnect.Core
             return connectOptions;
         }
 
+        private SendTransactionRequest GetTransactionRequest(Message[] messages)
+        {
+            long valudUntil = DateTimeOffset.Now.ToUnixTimeSeconds() + 600;
+
+            return new SendTransactionRequest(messages, valudUntil);
+        }
+
+        private Message[] GetTransactionMessages(string receiverAddress,
+            double amount)
+        {
+            Address receiver = new(receiverAddress);
+            Coins tokensAmount = new(amount);
+
+            Message[] messages =
+            {
+                new(receiver, tokensAmount),
+                //new(receiver, tokensAmount),
+                //new(receiver, tokensAmount),
+                //new(receiver, tokensAmount)
+            };
+
+            return messages;
+        }
+
         private void OnWalletConnectionFinish(Wallet wallet) => OnWalletConnectionFinished?.Invoke(wallet);
 
         private void OnWalletConnectionFail(string errorMessage) => OnWalletConnectionFailed?.Invoke(errorMessage);
 
+        private void OnWalletConnectionRestore(bool isRestored) => OnWalletConnectionRestored?.Invoke(isRestored);
+        
         public void OnInjectedWalletMessageReceived(string message) => _tonConnect.ParseInjectedProviderMessage(message);
     }
 }

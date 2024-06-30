@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c738896ec511a4195019a19ad8a06e, type: 3}
   m_Name: Wallets Storage
   m_EditorClassIdentifier: 
-  <Config>k__BackingField: []
+  <Config>k__BackingField:
+  - {fileID: 11400000, guid: 00dfd1f988393234f8ee470b9ede2596, type: 2}
+  - {fileID: 11400000, guid: 9bf70f5c32c21164c9f810b8dd1bde5c, type: 2}
+  - {fileID: 11400000, guid: 87b137b5fedcbbf45aeb2dd00cae0d99, type: 2}
+  - {fileID: 11400000, guid: 6a8b2dd511cc15d4f8d64ee2d700b354, type: 2}
+  - {fileID: 11400000, guid: ee33f1ad400009a4d8a84fd1dbdf84d6, type: 2}
+  - {fileID: 11400000, guid: 88da15f9edd3a0c4e96246757241e8bc, type: 2}
+  - {fileID: 11400000, guid: 77cb47618e7d154429c5c42f0e1ba32d, type: 2}
+  - {fileID: 11400000, guid: dbdbba8cacc3aed43bba8e4039289998, type: 2}
+  - {fileID: 11400000, guid: 5851fb6949f373e4e9c4c7689c0e9d04, type: 2}
+  - {fileID: 11400000, guid: ec07cd26a895ef14d99d18cd044986ed, type: 2}

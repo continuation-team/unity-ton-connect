@@ -7,7 +7,11 @@ namespace UnitonConnect.Core.Common
         delegate void OnWalletConnectionFinish(Wallet wallet);
         delegate void OnWalletConnectionFail(string errorMessage);
 
+        delegate void OnWalletConnectionRestore(bool isRestored);
+
         event OnWalletConnectionFinish OnWalletConnectionFinished;
         event OnWalletConnectionFail OnWalletConnectionFailed;
+
+        event OnWalletConnectionRestore OnWalletConnectionRestored;
     }
 }
