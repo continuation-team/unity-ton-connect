@@ -508,12 +508,12 @@ MonoBehaviour:
   _testMode: 0
   _debugMode: 1
   _initializeOnAwake: 0
-  _restoreConnectionOnAwake: 0
+  _restoreConnectionOnAwake: 1
   _walletsListConfig:
     SourceLink: 
     CachedTimeToLive: 0
   _useWebWallets: 1
-  _useCachedWalletsIcons: 0
+  _useCachedWalletsIcons: 1
   _supportedWallets: {fileID: 11400000, guid: 623a8d87d1401b84bae42ff0ed4962e8, type: 2}
 --- !u!1 &147073027
 GameObject:
