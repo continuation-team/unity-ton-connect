@@ -8,10 +8,22 @@ namespace UnitonConnect.Core.Common
         delegate void OnWalletConnectionFail(string errorMessage);
 
         delegate void OnWalletConnectionRestore(bool isRestored);
+        delegate void OnWalletConnectionPause();
+        delegate void OnWalletConnectionUnPause();
+
+        delegate void OnSendTransactionFinish(bool isSuccess);
+
+        delegate void OnWalletDisconnect();
 
         event OnWalletConnectionFinish OnWalletConnectionFinished;
         event OnWalletConnectionFail OnWalletConnectionFailed;
 
         event OnWalletConnectionRestore OnWalletConnectionRestored;
+        event OnWalletConnectionPause OnWalletConnectionPaused;
+        event OnWalletConnectionUnPause OnWalletConnectonUnPaused;
+
+        event OnSendTransactionFinish OnSendTransactionFinished;
+
+        event OnWalletDisconnect OnWalletDisconnected;
     }
 }

@@ -8,12 +8,12 @@ namespace UnitonConnect.Core.Demo
     {
         [SerializeField, Space] protected Button _target;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _target.onClick.AddListener(OnClick);
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _target.onClick.RemoveListener(OnClick);
         }

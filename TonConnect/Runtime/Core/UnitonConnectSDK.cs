@@ -91,6 +91,26 @@ namespace UnitonConnect.Core
         /// </summary>
         public event IUnitonConnectSDKCallbacks.OnWalletConnectionRestore OnWalletConnectionRestored;
 
+        /// <summary>
+        /// Callback to handle the status of pausing the connection to the wallet
+        /// </summary>
+        public event IUnitonConnectSDKCallbacks.OnWalletConnectionPause OnWalletConnectionPaused;
+
+        /// <summary>
+        /// Callback to handle the shutdown status of a previously activated connection pause
+        /// </summary>
+        public event IUnitonConnectSDKCallbacks.OnWalletConnectionUnPause OnWalletConnectonUnPaused;
+
+        /// <summary>
+        /// Callback to process the status of a recently sent transaction
+        /// </summary>
+        public event IUnitonConnectSDKCallbacks.OnSendTransactionFinish OnSendTransactionFinished;
+
+        /// <summary>
+        /// Callback to handle wallet connection disconnection status
+        /// </summary>
+        public event IUnitonConnectSDKCallbacks.OnWalletDisconnect OnWalletDisconnected;
+
         private void Awake()
         {
             CreateInstance();
@@ -143,6 +163,8 @@ namespace UnitonConnect.Core
         public void PauseConnection()
         {
             _tonConnect.PauseConnection();
+
+            OnWalletConnectionPause();
         }
 
         /// <summary>
@@ -151,6 +173,8 @@ namespace UnitonConnect.Core
         public void UnPauseConnection()
         {
             _tonConnect.UnPauseConnection();
+
+            OnWalletConnectionUnPause();
         }
 
         /// <summary>
@@ -218,6 +242,8 @@ namespace UnitonConnect.Core
                 var transactionResult = await _tonConnect.SendTransaction(transactionRequest);
 
                 UnitonConnectLogger.Log($"Transaction successfully completed: {transactionResult.Value.Boc}");
+
+                OnSendTransactionFinish(true);
             }
             catch (WalletNotConnectedError connectionError)
             {
@@ -250,6 +276,8 @@ namespace UnitonConnect.Core
                 _restoreConnectionOnAwake = false;
 
                 await _tonConnect.Disconnect();
+
+                OnWalletDisconnect();
             }
             catch (TonConnectError error)
             {
@@ -584,7 +612,15 @@ namespace UnitonConnect.Core
         private void OnWalletConnectionFail(string errorMessage) => OnWalletConnectionFailed?.Invoke(errorMessage);
 
         private void OnWalletConnectionRestore(bool isRestored) => OnWalletConnectionRestored?.Invoke(isRestored);
-        
-        public void OnInjectedWalletMessageReceived(string message) => _tonConnect.ParseInjectedProviderMessage(message);
+
+        private void OnWalletConnectionPause() => OnWalletConnectionPaused?.Invoke();
+
+        private void OnWalletConnectionUnPause() => OnWalletConnectonUnPaused?.Invoke();
+
+        private void OnSendTransactionFinish(bool isSuccess) => OnSendTransactionFinished?.Invoke(isSuccess);
+
+        private void OnInjectedWalletMessageReceived(string message) => _tonConnect.ParseInjectedProviderMessage(message);
+    
+        private void OnWalletDisconnect() => OnWalletDisconnected?.Invoke();
     }
 }

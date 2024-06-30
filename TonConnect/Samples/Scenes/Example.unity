@@ -508,7 +508,7 @@ MonoBehaviour:
   _testMode: 0
   _debugMode: 1
   _initializeOnAwake: 0
-  _restoreConnectionOnAwake: 1
+  _restoreConnectionOnAwake: 0
   _walletsListConfig:
     SourceLink: 
     CachedTimeToLive: 0
