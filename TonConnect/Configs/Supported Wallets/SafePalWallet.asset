@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74fb433a2eb1a80418643dd1e0f1eb2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 04c69591b368545408ef16ddc3d58dc9, type: 3}
   m_Name: SafePalWallet
   m_EditorClassIdentifier: 
   <Data>k__BackingField:
     Name: safepalwallet
-    Icon: {fileID: 2800000, guid: 23d89b482f59b8c4ea8b5c22d3b0935a, type: 3}
+    Icon: {fileID: 2800000, guid: 25533243746bbca46974e159c68d235c, type: 3}

@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using TonSdk.Connect;
 using UnitonConnect.Core.Data;
 using UnitonConnect.Core.Utils.Debugging;
-using System.Threading.Tasks;
 
 namespace UnitonConnect.Core.Utils.View
 {
@@ -31,40 +29,12 @@ namespace UnitonConnect.Core.Utils.View
             return firstFourChars + "..." + lastFourChars;
         }
 
-        public static IEnumerator GetWalletIconFromServerAsync(string imageUrl, 
-            Action<Texture2D> onComplete)
-        {
-            Texture2D walletIcon = null;
-
-            using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(imageUrl))
-            {
-                var operation = request.SendWebRequest();
-
-                while (!operation.isDone)
-                {
-                    yield return null;
-                }
-
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    UnitonConnectLogger.LogError($"Failed to load wallet image with error: {request.error}");
-                   
-                    onComplete?.Invoke(null);
-
-                    yield break;
-                }
-
-                walletIcon = DownloadHandlerTexture.GetContent(request);
-
-                onComplete?.Invoke(walletIcon);
-            }
-        }
-
         /// <summary>
         /// Download the wallet icon from the server using the specified link.
         /// </summary>
         /// <param name="imageUrl">Referencing a wallet icon from a previously retrieved wallet configuration via the `OnWalletConnectionFinished` event.</param>
-        public static async Task<Texture2D> GetWalletIconFromServerAsync(string imageUrl)
+        public static async Task<Texture2D> GetWalletIconFromServerAsync(
+            string imageUrl)
         {
             Texture2D walletIcon = null;
 
@@ -97,45 +67,6 @@ namespace UnitonConnect.Core.Utils.View
         public static Texture2D GetQRCodeFromUrl(string connectUrl)
         {
             return QRGenerator.EncodeString(connectUrl.ToString());
-        }
-
-        public static IEnumerator GetWalletIconFromLocalStorage(MonoBehaviour mono, WalletConfig config,
-            List<WalletProviderConfig> localStorage, Action<Texture2D> onComplete)
-        {
-            if (!UnitonConnectSDK.Instance.IsUseCachedWalletsIcons)
-            {
-                UnitonConnectLogger.LogWarning("For loading wallet icons from local storage, " +
-                    "you need to activate the 'Use Cached Wallets Icons' option");
-
-                onComplete?.Invoke(null);
-
-                yield break;
-            }
-
-            Texture2D icon = null;
-
-            foreach (var wallet in localStorage)
-            {
-                if (wallet.Data.Name == config.AppName)
-                {
-                    icon = wallet.Data.Icon;
-
-                    break;
-                }
-            }
-
-            if (icon == null)
-            {
-                UnitonConnectLogger.LogError($"Failed to load {config.Name} wallet icon from local storage, start downloading from server...");
-
-                yield return mono.StartCoroutine(GetWalletIconFromServerAsync(config.Image, (downloadedIcon) =>
-                {
-                    icon = downloadedIcon;
-                    UnitonConnectLogger.Log($"{config.Name} wallet icon successfully downloaded from the server");
-                }));
-            }
-
-            onComplete?.Invoke(icon);
         }
 
         /// <summary>
@@ -174,38 +105,12 @@ namespace UnitonConnect.Core.Utils.View
             return icon;
         }
 
-        public static IEnumerator GetWalletViewIfIconIsNotExist(MonoBehaviour mono, 
-            WalletConfig config, WalletsProvidersData localStorage,
-            Action<WalletViewData> onComplete)
-        {
-            string name = config.Name;
-            Texture2D icon = null;
-
-            if (UnitonConnectSDK.Instance.IsUseCachedWalletsIcons)
-            {
-                yield return mono.StartCoroutine(GetWalletIconFromLocalStorage(mono, config, localStorage.Config, (loadedIcon) =>
-                {
-                    icon = loadedIcon;
-                }));
-            }
-            else
-            {
-                yield return mono.StartCoroutine(GetWalletIconFromServerAsync(config.Image, (downloadedIcon) =>
-                {
-                    icon = downloadedIcon;
-                }));
-            }
-
-            var walletViewData = GetWalletView(name, icon);
-            onComplete?.Invoke(walletViewData);
-        }
-
         /// <summary>
         /// Gets the wallet data container to be used in the project interface, even if there is no icon in the local store
         /// </summary>
         /// <param name="config">Configuration of the previously obtained wallet</param>
         /// <param name="localStorage">Local storage of used wallets</param>
-        public static async Task<WalletViewData> GetWalletViewIfIconIsNotExist(MonoBehaviour mono,
+        public static async Task<WalletViewData> GetWalletViewIfIconIsNotExist(
             WalletConfig config, WalletsProvidersData localStorage)
         {
             string name = config.Name;

@@ -67,6 +67,10 @@ namespace UnitonConnect.Core
 
         private TonConnect _tonConnect;
 
+        private TonConnectOptions _tonConnectOptions;
+        private AdditionalConnectOptions _additionalConnectOptions;
+        private RemoteStorage _remoteStorage;
+
         public List<WalletProviderConfig> SupportedWallets => _supportedWallets.Config;
 
         public bool IsTestMode => _testMode;
@@ -77,7 +81,12 @@ namespace UnitonConnect.Core
         public bool IsUseCachedWalletsIcons => _useCachedWalletsIcons;
 
         /// <summary>
-        /// Callback, in case of successful initialization of sdk and loading of wallet configurations for further connection
+        /// Callback if sdk initialization is successful
+        /// </summary>
+        public event IUnitonConnectSDKCallbacks.OnUnitonConnectInitialize OnInitialized;
+
+        /// <summary>
+        /// Callback in case of successful initialization of sdk and loading of wallet configurations for further connection
         /// </summary>
         public event IUnitonConnectSDKCallbacks.OnWalletConnectionFinish OnWalletConnectionFinished;
 
@@ -121,7 +130,7 @@ namespace UnitonConnect.Core
             }
 
             Initialize();
-        } 
+        }
 
         /// <summary>
         /// Initialization of the Uniton Connect sdk if you want to do it manually.
@@ -144,15 +153,18 @@ namespace UnitonConnect.Core
 
             ConfigureWalletsConfig();
 
-            var options = GetOptions(dAppManifestLink);
-            var remoteStorage = GetRemoteStorage();
-            var connectOptions = GetAdditionalConnectOptions();
+            _tonConnectOptions = GetOptions(dAppManifestLink);
+            _remoteStorage = GetRemoteStorage();
+            _additionalConnectOptions = GetAdditionalConnectOptions();
 
-            _tonConnect = GetTonConnectInstance(options, remoteStorage, connectOptions);
+            _tonConnect = GetTonConnectInstance(_tonConnectOptions,
+                _remoteStorage, _additionalConnectOptions);
 
             _tonConnect.OnStatusChange(OnWalletConnectionFinish, OnWalletConnectionFail);
 
-            RestoreConnectionAsync(remoteStorage);
+            RestoreConnectionAsync(_remoteStorage);
+
+            OnInitialize();
 
             UnitonConnectLogger.Log("SDK successfully initialized");
         }
@@ -271,13 +283,7 @@ namespace UnitonConnect.Core
                     return;
                 }
 
-                PauseConnection();
-
-                _restoreConnectionOnAwake = false;
-
                 await _tonConnect.Disconnect();
-
-                OnWalletDisconnect();
             }
             catch (TonConnectError error)
             {
@@ -338,10 +344,7 @@ namespace UnitonConnect.Core
         {
             if (!_restoreConnectionOnAwake)
             {
-                storage.RemoveItem(RemoteStorage.KEY_CONNECTION);
-                storage.RemoveItem(RemoteStorage.KEY_LAST_EVENT_ID);
-
-                OnWalletConnectionRestore(false);
+                ResetConnectionStorage(storage);
 
                 return;
             }
@@ -548,6 +551,20 @@ namespace UnitonConnect.Core
             walletsClaimed(loadedWallets);
         }
 
+        private void ResetConnectionStorage(RemoteStorage storage)
+        {
+            var keyConnection = RemoteStorage.KEY_CONNECTION;
+            var lastEventId = RemoteStorage.KEY_LAST_EVENT_ID;
+
+            storage.RemoveItem(keyConnection);
+            storage.RemoveItem(lastEventId);
+
+            ProjectStorageConsts.DeleteConnectionKey(keyConnection);
+            ProjectStorageConsts.DeleteConnectionKey(lastEventId);
+
+            OnWalletConnectionRestore(false);
+        }
+
         private TonConnect GetTonConnectInstance(TonConnectOptions options,
             RemoteStorage storage, AdditionalConnectOptions connectOptions)
         {
@@ -607,7 +624,22 @@ namespace UnitonConnect.Core
             return messages;
         }
 
-        private void OnWalletConnectionFinish(Wallet wallet) => OnWalletConnectionFinished?.Invoke(wallet);
+        private void OnInitialize() => OnInitialized?.Invoke();
+
+        private void OnWalletConnectionFinish(Wallet wallet)
+        {
+            if (!IsWalletConnected)
+            {
+                ResetConnectionStorage(_remoteStorage);
+
+                OnWalletDisconnect();
+
+                UnitonConnectLogger.Log("Connection to the wallet has been successfully disconnected," +
+                    " the storage of the previous session has been cleaned up");
+            }
+
+            OnWalletConnectionFinished?.Invoke(wallet);
+        }
 
         private void OnWalletConnectionFail(string errorMessage) => OnWalletConnectionFailed?.Invoke(errorMessage);
 

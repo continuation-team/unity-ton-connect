@@ -118,11 +118,11 @@ namespace UnitonConnect.Core.Demo
             _unitonSDK.GetWalletsConfigs(ProjectStorageConsts.
                 START_TON_WALLETS_LINK, (walletsConfigs) =>
                 {
-                    StartCoroutine(CreateWalletsList(walletsConfigs));
+                    CreateWalletsList(walletsConfigs);
                 });
         }
 
-        private IEnumerator CreateWalletsList(List<WalletConfig> wallets)
+        private async void CreateWalletsList(List<WalletConfig> wallets)
         {
             var walletsConfigs = WalletConnectUtils.GetSupportedWalletsListForUse(wallets);
 
@@ -138,12 +138,10 @@ namespace UnitonConnect.Core.Demo
             {
                 WalletViewData walletView = null;
 
-                yield return StartCoroutine(WalletVisualUtils.GetWalletViewIfIconIsNotExist(
-                    this, wallet, _walletsStorage, (walletViewResult) =>
-                {
-                    walletView = walletViewResult;
-                    walletsViewList.Add(walletView);
-                }));
+                walletView = await WalletVisualUtils.GetWalletViewIfIconIsNotExist(
+                    wallet, _walletsStorage);
+
+                walletsViewList.Add(walletView);
             }
 
             foreach (var walletView in walletsViewList)

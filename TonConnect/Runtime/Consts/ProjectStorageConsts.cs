@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnitonConnect.Runtime.Data;
+using TonSdk.Connect;
+using JetBrains.Annotations;
 
 namespace UnitonConnect.Editor.Common
 {
@@ -41,6 +43,16 @@ namespace UnitonConnect.Editor.Common
         public static DAppConfig GetRuntimeAppStorage()
         {
             return Resources.Load<DAppConfig>($"{RUNTIME_FOLDER_IN_RESOURCES}/{RUNTIME_FILE_NAME_WITOUT_FORMAT}");
+        }
+
+        public static void DeleteConnectionKey(string connectionKey)
+        {
+            PlayerPrefs.DeleteKey(GetSaveConnectionKey(connectionKey));
+        }
+
+        private static string GetSaveConnectionKey(string connectionKey)
+        {
+            return $"{RemoteStorage.STORAGE_PREFIX}{connectionKey}";
         }
     }
 }

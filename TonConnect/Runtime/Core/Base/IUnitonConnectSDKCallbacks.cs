@@ -4,6 +4,8 @@ namespace UnitonConnect.Core.Common
 {
     public interface IUnitonConnectSDKCallbacks
     {
+        delegate void OnUnitonConnectInitialize();
+
         delegate void OnWalletConnectionFinish(Wallet wallet);
         delegate void OnWalletConnectionFail(string errorMessage);
 
@@ -14,6 +16,8 @@ namespace UnitonConnect.Core.Common
         delegate void OnSendTransactionFinish(bool isSuccess);
 
         delegate void OnWalletDisconnect();
+
+        event OnUnitonConnectInitialize OnInitialized;
 
         event OnWalletConnectionFinish OnWalletConnectionFinished;
         event OnWalletConnectionFail OnWalletConnectionFailed;

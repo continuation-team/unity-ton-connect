@@ -502,19 +502,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 136500635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaef2dddc0c6b1e4a83c4e976fe5baa8, type: 3}
+  m_Script: {fileID: 11500000, guid: 089b6779f2a023a4395870db227b144b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _testMode: 0
   _debugMode: 1
   _initializeOnAwake: 0
-  _restoreConnectionOnAwake: 0
+  _restoreConnectionOnAwake: 1
   _walletsListConfig:
     SourceLink: 
     CachedTimeToLive: 0
   _useWebWallets: 1
   _useCachedWalletsIcons: 1
-  _supportedWallets: {fileID: 11400000, guid: 623a8d87d1401b84bae42ff0ed4962e8, type: 2}
+  _supportedWallets: {fileID: 11400000, guid: b52b65440e65b3240a1721c7fb6766d5, type: 2}
 --- !u!1 &147073027
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +859,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 177101742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe0e221315215834382fdc489effc34b, type: 3}
+  m_Script: {fileID: 11500000, guid: 445d34c8011e0334bbf43935e9290944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 177101744}
@@ -1526,11 +1526,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 515026106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396624d97e12f92469be3a7b146ffd9a, type: 3}
+  m_Script: {fileID: 11500000, guid: 73d6bca820c181940b9820f10f5fa4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _unitonSDK: {fileID: 136500638}
-  _walletsStorage: {fileID: 11400000, guid: 623a8d87d1401b84bae42ff0ed4962e8, type: 2}
+  _walletsStorage: {fileID: 11400000, guid: b52b65440e65b3240a1721c7fb6766d5, type: 2}
   _debugMessage: {fileID: 1482803316}
   _shortWalletAddress: {fileID: 2058162193}
   _connectButton: {fileID: 1029599515}
@@ -1538,7 +1538,7 @@ MonoBehaviour:
   _sendTransactionButton: {fileID: 2132820827}
   _chooseWalletPanel: {fileID: 550155504}
   _connectPanel: {fileID: 1173098803}
-  _walletViewPrefab: {fileID: 1507117424773265365, guid: cb5d2e8d54892e046b71de0c123447ce, type: 3}
+  _walletViewPrefab: {fileID: 8589778159642721567, guid: 8f6f3a23eb0fe024aa3232148a417ada, type: 3}
   _walletsParent: {fileID: 1122900484}
   _activeWallets: []
 --- !u!1 &517728803
@@ -1747,7 +1747,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 550155500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b167f1c9e0dbcad4bb8971536bca347e, type: 3}
+  m_Script: {fileID: 11500000, guid: 21682bef65fb33a49bff1732fd8d52d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &569411082
@@ -1761,7 +1761,7 @@ GameObject:
   - component: {fileID: 569411083}
   - component: {fileID: 569411086}
   - component: {fileID: 569411085}
-  - component: {fileID: 569411084}
+  - component: {fileID: 569411087}
   m_Layer: 5
   m_Name: SendTransactionPanel
   m_TagString: Untagged
@@ -1790,20 +1790,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.00024414062, y: 0}
   m_SizeDelta: {x: -0.8499756, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &569411084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 569411082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cf9fd8128d3dd24dbd7737ee23d4aed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _amountBar: {fileID: 1015885742}
-  _targetWalletAddress: {fileID: 1643174199}
 --- !u!114 &569411085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1842,6 +1828,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569411082}
   m_CullTransparentMesh: 1
+--- !u!114 &569411087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569411082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9676bf76f6aee7a4a857dc6982129666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountBar: {fileID: 1015885742}
+  _targetWalletAddress: {fileID: 1643174199}
 --- !u!1 &571067542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1927,7 +1927,7 @@ GameObject:
   - component: {fileID: 586987566}
   - component: {fileID: 586987565}
   - component: {fileID: 586987564}
-  - component: {fileID: 586987563}
+  - component: {fileID: 586987567}
   m_Layer: 5
   m_Name: Set0.01TON-Button
   m_TagString: Untagged
@@ -1956,20 +1956,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.003982544, y: -0.2900238}
   m_SizeDelta: {x: 117.92999, y: 0.1499939}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &586987563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586987561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a808e08d8954abe4cadc6faa4cf4e61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetButton: {fileID: 586987564}
-  _amountBar: {fileID: 1015885742}
 --- !u!114 &586987564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2052,6 +2038,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586987561}
   m_CullTransparentMesh: 1
+--- !u!114 &586987567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586987561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a8908b1f30d754cafadd620c8589bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetButton: {fileID: 586987564}
+  _amountBar: {fileID: 1579107211}
 --- !u!1 &598426532
 GameObject:
   m_ObjectHideFlags: 0
@@ -2640,7 +2640,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 753082777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb14ac3dc756d74448dedf92a201b076, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c0a186179e82ae41bab50a49dad48a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 753082779}
@@ -2913,7 +2913,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 817907980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbbf22583ca98ae4c9d70ec72c031f0e, type: 3}
+  m_Script: {fileID: 11500000, guid: ba6276b658673cd468fa27773118c5b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 817907982}
@@ -3262,7 +3262,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1029599513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09266119a9b3a4b458989484a89de2ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b807be4e754af943991375f05a66fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1029599515}
@@ -3399,11 +3399,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1032270204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 705281759ac7bbc4d81d4ad34b319361, type: 3}
+  m_Script: {fileID: 11500000, guid: 78451d28d2fd6e447be8ecace9ee1662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1032270206}
-  _panel: {fileID: 569411084}
+  _panel: {fileID: 569411087}
 --- !u!1 &1115276811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,7 +3644,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1173098799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dda2614710eab95478a051a073eeb1a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4284ac999496dd54b8871e0cb25df018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _qrCodeImage: {fileID: 571067546}
@@ -3707,7 +3707,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dcbb25156793efb44a0aace13ff00190, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a942946e05ac7e44baf3a62af73b6891, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3813,7 +3813,7 @@ GameObject:
   - component: {fileID: 1306652497}
   - component: {fileID: 1306652496}
   - component: {fileID: 1306652495}
-  - component: {fileID: 1306652494}
+  - component: {fileID: 1306652498}
   m_Layer: 5
   m_Name: Set0.1TON-Button
   m_TagString: Untagged
@@ -3842,20 +3842,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.2989807, y: -0.4200287}
   m_SizeDelta: {x: 117.94, y: 0.41000366}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1306652494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1306652492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c87fa057e795bf24585acee5858bcac8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetButton: {fileID: 1306652495}
-  _amountBar: {fileID: 1015885742}
 --- !u!114 &1306652495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3938,6 +3924,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1306652492}
   m_CullTransparentMesh: 1
+--- !u!114 &1306652498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306652492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed3b12c5e814f44a94809ade0735a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetButton: {fileID: 1306652495}
+  _amountBar: {fileID: 1579107211}
 --- !u!1 &1406722129
 GameObject:
   m_ObjectHideFlags: 0
@@ -4070,7 +4070,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1406722129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e7ff811920836043a1a9a000b9f6591, type: 3}
+  m_Script: {fileID: 11500000, guid: fb19ca8a99b348d4289686afb84c8a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1406722131}
@@ -4644,7 +4644,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1643174195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9baf5a0aeb309654e8793ca067c0e2dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 496269c7cdaffac4ba97e8f8eb96769d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _addressBar: {fileID: 1579107211}
@@ -4736,7 +4736,7 @@ GameObject:
   - component: {fileID: 1726717234}
   - component: {fileID: 1726717233}
   - component: {fileID: 1726717232}
-  - component: {fileID: 1726717231}
+  - component: {fileID: 1726717235}
   m_Layer: 5
   m_Name: Set1TON-Button
   m_TagString: Untagged
@@ -4765,20 +4765,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.16101074, y: -0.4200287}
   m_SizeDelta: {x: 117.94, y: 0.41000366}
   m_Pivot: {x: 1, y: 0.5}
---- !u!114 &1726717231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726717229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c5b73c3ea3f3a4b9413a26e0e03919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetButton: {fileID: 1726717232}
-  _amountBar: {fileID: 1015885742}
 --- !u!114 &1726717232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4861,6 +4847,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726717229}
   m_CullTransparentMesh: 1
+--- !u!114 &1726717235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726717229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab6b8b40034c41c40ae389d9a64d8bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetButton: {fileID: 1726717232}
+  _amountBar: {fileID: 1579107211}
 --- !u!1 &1731074720
 GameObject:
   m_ObjectHideFlags: 0
@@ -5427,7 +5427,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2007343165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3095e8dfc95988946ae0f1002ced695c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ea9c57af27614f4cbf3dd554ecf562a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 2007343167}
@@ -5731,7 +5731,7 @@ GameObject:
   - component: {fileID: 2132820829}
   - component: {fileID: 2132820828}
   - component: {fileID: 2132820827}
-  - component: {fileID: 2132820830}
+  - component: {fileID: 2132820831}
   m_Layer: 5
   m_Name: SendTransaction
   m_TagString: Untagged
@@ -5842,7 +5842,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132820825}
   m_CullTransparentMesh: 1
---- !u!114 &2132820830
+--- !u!114 &2132820831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5851,8 +5851,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2132820825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2e43c350e71694fb3f7be59de82ba9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c0a186179e82ae41bab50a49dad48a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 2132820827}
-  _panel: {fileID: 569411084}
+  _amountBar: {fileID: 1015885742}
+  _addressBar: {fileID: 1643174199}

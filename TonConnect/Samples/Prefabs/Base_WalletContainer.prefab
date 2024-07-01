@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7874476113791022906}
   - component: {fileID: 1769072268161024473}
   - component: {fileID: 1062143157236809048}
-  - component: {fileID: 1507117424773265365}
+  - component: {fileID: 8589778159642721567}
   m_Layer: 5
   m_Name: Base_WalletContainer
   m_TagString: Untagged
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1507117424773265365
+--- !u!114 &8589778159642721567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,7 +267,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8874931049203746563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f8b9530f215aa6458f43a4e7adb2770, type: 3}
+  m_Script: {fileID: 11500000, guid: 20f144a939c92f449b596229b458377c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _header: {fileID: 5560535011153534625}

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74fb433a2eb1a80418643dd1e0f1eb2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 04c69591b368545408ef16ddc3d58dc9, type: 3}
   m_Name: TonHub
   m_EditorClassIdentifier: 
   <Data>k__BackingField:
