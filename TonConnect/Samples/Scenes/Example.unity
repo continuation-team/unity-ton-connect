@@ -512,7 +512,7 @@ MonoBehaviour:
   _walletsListConfig:
     SourceLink: 
     CachedTimeToLive: 0
-  _useWebWallets: 1
+  _useWebWallets: 0
   _useCachedWalletsIcons: 1
   _supportedWallets: {fileID: 11400000, guid: b52b65440e65b3240a1721c7fb6766d5, type: 2}
 --- !u!1 &147073027
