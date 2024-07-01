@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -9,6 +10,30 @@ namespace UnitonConnect.Core.Utils
 {
     public sealed class WalletConnectUtils
     {
+        /// <summary>
+        /// Returns the full wallet configuration if its name is found in the list
+        /// </summary>
+        /// <param name="walletsConfigs">Wallet configuration to check. Call `OnWalletConnectionFinished` to get all available configurations.</param>
+        /// <param name="targetWalletName">Wallet name to be found</param>
+        public static WalletConfig GetConfigOfSpecifiedWallet(
+            List<WalletConfig> walletsConfigs, string targetWalletName)
+        {
+            var wallet = walletsConfigs.FirstOrDefault(wallet => 
+                wallet.Name.Equals(targetWalletName, StringComparison.OrdinalIgnoreCase));
+
+            if (wallet.Name == null)
+            {
+                UnitonConnectLogger.LogWarning($"Wallet with name '{targetWalletName}' not found is list.");
+
+                wallet = walletsConfigs.FirstOrDefault(wallet =>
+                    wallet.AppName.Equals(targetWalletName, StringComparison.OrdinalIgnoreCase));
+
+                UnitonConnectLogger.LogWarning($"A search for another name of this wallet has been started");
+            }
+
+            return wallet;
+        }
+
         /// <summary>
         /// Checks the wallet configuration for the presence of an http bridge
         /// </summary>

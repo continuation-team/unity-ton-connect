@@ -239,9 +239,11 @@ namespace UnitonConnect.Core
         /// <summary>
         /// Send TonCoin to the specified recipient address
         /// </summary>
+        /// <param name="currentWallet">Current authorized wallet for the transaction</param>
         /// <param name="recipientAddress">Token recipient address</param>
         /// <param name="amount">Number of tokens to send</param>
-        public async Task SendTransaction(string recipientAddress, double amount)
+        public async Task SendTransaction(WalletConfig currentWallet,
+            string recipientAddress, double amount)
         {
             var transactionMessages = GetTransactionMessages(recipientAddress, amount);
             var transactionRequest = GetTransactionRequest(transactionMessages);
@@ -250,6 +252,8 @@ namespace UnitonConnect.Core
             {
                 UnitonConnectLogger.Log($"Created a request to send a TON" +
                     $" to the recipient: {recipientAddress} in amount {amount}");
+
+                Application.OpenURL(currentWallet.UniversalUrl);
 
                 var transactionResult = await _tonConnect.SendTransaction(transactionRequest);
 

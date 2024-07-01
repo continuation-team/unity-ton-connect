@@ -54,6 +54,8 @@ namespace UnitonConnect.Core.Demo
         [SerializeField] private Transform _walletsParent;
         [SerializeField, Space] private List<TestWalletView> _activeWallets;
 
+        public WalletConfig LatestAuthorizedWallet { get; private set; }
+
         public List<WalletConfig> LoadedWallets { get; set; }
 
         private string _connectUrl;
@@ -179,6 +181,15 @@ namespace UnitonConnect.Core.Demo
                 _sendTransactionButton.interactable = true;
 
                 _chooseWalletPanel.Close();
+
+                if (LoadedWallets != null)
+                {
+                    LatestAuthorizedWallet = WalletConnectUtils.GetConfigOfSpecifiedWallet(
+                        LoadedWallets, wallet.Device.AppName);
+
+                    UnitonConnectLogger.Log($"The current wallet in the list is detected: " +
+                        $"{JsonConvert.SerializeObject(LatestAuthorizedWallet)}");
+                }
             }
             else
             {

@@ -10,7 +10,9 @@ namespace UnitonConnect.Core.Demo
 
         public sealed override async void OnClick()
         {
-            await UnitonConnectSDK.Instance.SendTransaction(
+            var latestWallet = TestWalletInterfaceAdapter.Instance.LatestAuthorizedWallet;
+
+            await UnitonConnectSDK.Instance.SendTransaction(latestWallet,
                 _addressBar.FullAddress, ParseAmountFromBar(_amountBar.text));
         }
 
